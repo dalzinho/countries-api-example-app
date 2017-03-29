@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Country App</title>
-    <script src='index.js'></script>
-  </head>
-  <body>
+<head>
+  <title>Country App</title>
+  <script src='index.js'></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div id="study-mode">
+    <button id="toggle-to-quiz">Quiz Mode</button>
+
     <h1>Countries</h1>
     <select id="country-selector">
     </select>
     <button id="show-details">Show</button>
+    <button id="show-all">Show All</button>
     <ul id="country-facts">
     </ul>
-  </body>
+  </div>
+
+
+
+
+
+
+
+  <div id="quiz-mode">
+    <button id="toggle-to_study">Study Mode</button>
+    <h1>Flag Quiz</h1>
+    <div id="flag-box">
+      <img id="the-flag"/>
+    </div>
+    <input id="what-the-monkey-thinks" type="text" name="userResponse" placeholder="What flag is this?" />
+    <button id="submitUserResponse">Submit</button>
+    <ul id="quiz-country-facts">
+    </ul>
+  </div>
+</body>
 </html>

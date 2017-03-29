@@ -54,32 +54,108 @@ var populateDropDown = function(countries){
   }) 
 };
 
-var populateFacts = function(){
-    var selected = document.querySelector('#country-selector');
-    console.log(selected.value);
-    var country = countries[selected.value];
-    console.log(country);
+// var getPossibleAnswers = function(){};
 
-    var countryFacts = document.querySelector('#country-facts');
-    var name = document.createElement('li');
-    name.innerText = country.name;
-    countryFacts.appendChild(name);
-    var population = document.createElement('li');
-    population.innerText = country.population;
-    countryFacts.appendChild(population);
-    var capital = document.createElement('li');
-    capital.innerText = country.capital;
-    countryFacts.appendChild(capital);
+
+var populateFacts = function(){
+  var selected = document.querySelector('#country-selector');
+  console.log(selected.value);
+  var country = countries[selected.value];
+  console.log(country);
+
+  var countryFacts = document.querySelector('#country-facts');
+
+  var flag = document.createElement('li');
+  var flagImage = document.createElement('img');
+  flagImage.setAttribute('src', country.flag);
+  flagImage.setAttribute('width', 200);
+  flag.appendChild(flagImage);
+  countryFacts.appendChild(flag);
+
+  var name = document.createElement('li');
+  name.innerText = "Name: " + country.name;
+  countryFacts.appendChild(name);
+
+  var population = document.createElement('li');
+  population.innerText = "Population: " + country.population.toLocaleString();
+  countryFacts.appendChild(population);
+
+  var capital = document.createElement('li');
+  capital.innerText = "Capital: " + country.capital;
+  countryFacts.appendChild(capital);
 
 
 };
 
+console.log(countries);  
+
+var getThreeRandoms = function(){
+  // for(var i = 0; i < 3; i++){}
+}
+
+var hoistFlag = function(){
+
+  var answer = Math.floor(Math.random() * countries.length);
+  console.log(countries[answer].name);
+  var theFlag = document.querySelector('#the-flag');
+  theFlag.setAttribute('src', countries[answer].flag);
+  var correctCountry = countries[answer];
+
+  var answerDetails = "This is the flag of " + correctCountry.name + ".\n Its population is " + correctCountry.population + ".\n Its capital is " + correctCountry.capital + ".";
+  var answerButton = document.querySelector('#submitUserResponse');
+  answerButton.onclick = function(){
+var userResponse = document.querySelector('#what-the-monkey-thinks');
+    console.log(userResponse.value);
+
+    if(userResponse.value == countries[answer].name){
+      alert('WELL DONE!\n' + answerDetails);
+    } else {
+      alert('SORRY DUMBASS!\n' + answerDetails);
+    }
+    userResponse.value = "";
+
+    hoistFlag()
+  }
+
+}
+
 var app = function(){
+
   var url = "https://restcountries.eu/rest/v2";
   makeRequest(url, requestComplete);
 
-  var button = document.getElementById('show-details');
-  button.onclick = populateFacts;
+  // todo: only allow one click
+  var showDetails = document.getElementById('show-details');
+  showDetails.onclick = populateFacts;
+
+  var showAll = document.querySelector('#show-all');
+  showAll.onclick = function(){
+    countries.forEach(function(country){
+      console.log(country);
+    })
+  }
+
+  var quizModeButton = document.querySelector('#toggle-to-quiz');
+  quizModeButton.onclick = function(){
+    console.log('clicked')
+    var quizMode = document.querySelector('#quiz-mode');
+    quizMode.style.display = 'block';
+    var studyMode = document.querySelector('#study-mode');
+    studyMode.style.display = 'none';
+    hoistFlag();
+
+  }
+
+  var studyModeButton = document.querySelector('#toggle-to_study');
+  
+  studyModeButton.onclick = function(){
+    var quizMode = document.querySelector('#quiz-mode');
+    quizMode.style.display = 'none';
+    var studyMode = document.querySelector('#study-mode');
+    studyMode.style.display = 'block';
+  }
+
+
 }
 
 window.onload = app;
