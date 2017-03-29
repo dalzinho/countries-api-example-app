@@ -1,4 +1,6 @@
 var countries = null;
+var scoreCount = 0;
+
 
 var makeRequest = function(url, callback){
   // create a new XMLHttpRequest object.
@@ -56,12 +58,16 @@ var populateDropDown = function(countries){
 
 // var getPossibleAnswers = function(){};
 
-
-var populateFacts = function(){
+var getCountryFromSelector = function(){
   var selected = document.querySelector('#country-selector');
   console.log(selected.value);
   var country = countries[selected.value];
   console.log(country);
+  return country;
+}
+
+var populateFacts = function(country){
+
 
   var countryFacts = document.querySelector('#country-facts');
 
@@ -101,18 +107,24 @@ var hoistFlag = function(){
   theFlag.setAttribute('src', countries[answer].flag);
   var correctCountry = countries[answer];
 
+  var scoreDisplay = document.querySelector('#score');
+  scoreDisplay.innerText = scoreCount;
+
   var answerDetails = "This is the flag of " + correctCountry.name + ".\n Its population is " + correctCountry.population + ".\n Its capital is " + correctCountry.capital + ".";
   var answerButton = document.querySelector('#submitUserResponse');
   answerButton.onclick = function(){
-var userResponse = document.querySelector('#what-the-monkey-thinks');
+    var userResponse = document.querySelector('#what-the-monkey-thinks');
     console.log(userResponse.value);
 
-    if(userResponse.value == countries[answer].name){
+
+    if(userResponse.value.toLowerCase() == countries[answer].name.toLowerCase()){
       alert('WELL DONE!\n' + answerDetails);
+      scoreCount++;
     } else {
       alert('SORRY DUMBASS!\n' + answerDetails);
     }
     userResponse.value = "";
+
 
     hoistFlag()
   }
@@ -126,12 +138,14 @@ var app = function(){
 
   // todo: only allow one click
   var showDetails = document.getElementById('show-details');
-  showDetails.onclick = populateFacts;
+  showDetails.onclick = function(){
+    populateFacts(getCountryFromSelector());
+  };
 
   var showAll = document.querySelector('#show-all');
   showAll.onclick = function(){
     countries.forEach(function(country){
-      console.log(country);
+      populateFacts(country);
     })
   }
 
