@@ -1,0 +1,21 @@
+
+#the-flag {
+  width: 400px;
+  border: 1px solid black;
+}
+
+#quiz-mode {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  font-family: sans-serif;
+}
+
+li img {
+  border: 1px solid black;
+}
