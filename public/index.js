@@ -95,10 +95,6 @@ var populateFacts = function(country){
 
 console.log(countries);  
 
-var getThreeRandoms = function(){
-  // for(var i = 0; i < 3; i++){}
-}
-
 var hoistFlag = function(){
 
   var answer = Math.floor(Math.random() * countries.length);
